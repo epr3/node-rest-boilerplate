@@ -1,8 +1,16 @@
-# ie-x-ebusiness-backend
+# node REST boilerplate
 
 ## How to run
 
-### Copy the example .env and config it
+### Docker
+
+### Install Docker
+
+### Run compose command
+
+``` docker-compose up ```
+
+### Alternative: Copy the example .env and config it
 
 ``` cp .env.example .env ```
 
