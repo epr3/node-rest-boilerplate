@@ -30,13 +30,25 @@ app.get('/healthz', (req, res) => {
   res.status(200).send('OK');
 });
 
+app.get('/video');
+
 app.use(sessionRoutes);
 
 // ALWAYS USE ERROR MIDDLEWARE LAST !!!!
 app.use(errorMiddleware);
 
+const http = require('http').Server(app);
+const io = require('socket.io')(http);
+
+io.on('connection', socket => {
+  console.log('client connected');
+  socket.on('stream', image => {
+    socket.broadcast.emit('stream', image);
+  });
+});
+
 if (process.env.NODE_ENV !== 'TEST') {
-  const server = app.listen(process.env.PORT || 3000, () => {
+  const server = http.listen(process.env.PORT || 3000, () => {
     const { port } = server.address();
     console.log('Listening on port ' + port);
   });
